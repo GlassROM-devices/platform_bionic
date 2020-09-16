@@ -115,9 +115,15 @@ cc_defaults {
     whole_static_libs: ["libc_jemalloc_wrapper"],
     multilib: {
         lib32: {
-            whole_static_libs: ["libjemalloc5"],
+            cflags: ["-DUSE_SCUDO"],
+            whole_static_libs: ["libscudo"],
+            exclude_static_libs: [
+                "libjemalloc5",
+                "libc_jemalloc_wrapper",
+            ],
         },
         lib64: {
+            cflags: ["-DH_MALLOC_PREFIX"],
             whole_static_libs: ["libhardened_malloc"],
         },
     },
